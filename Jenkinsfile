@@ -64,7 +64,7 @@ pipeline {
                 {
                 sh """
                 echo "jar 파일 복사"
-                sh "cp ./build/libs/app.jar ./docker/app.jar"
+                sh "cp ./build/libs/app.jar ./app.jar"
                 docker build  -t ${DOCKERHUB_USER}/guest .
                 echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
                 docker push ${params.DOCKERHUB_USERNAME}/guest
