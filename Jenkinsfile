@@ -9,8 +9,6 @@ pipeline {
      * 환경 설정
      ***********************/
     parameters {
-        // DockerHub 사용자명 입력
-        string(name: 'DOCKERHUB_USERNAME',  defaultValue: 'academyitwill', description: 'DockerHub 사용자명을 입력하세요.')
         // GitHub  사용자명 입력
         string(name: 'GITHUB_USERNAME',  defaultValue: '2025-07-JAVA-DEVELOPER-162', description: 'GitHub  사용자명을 입력하세요.')
     }
@@ -67,7 +65,7 @@ pipeline {
                     cp ./build/libs/app.jar ./docker/app.jar
                     docker build  -t "${DOCKERHUB_USER}/guest" ./docker
                     echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
-                    docker push "${params.DOCKERHUB_USERNAME}/guest"
+                    docker push "${DOCKERHUB_USER}/guest"
                     docker logout
                 '''
                 }
