@@ -88,6 +88,14 @@ EOF
                     }
                 }
             }
+            post {
+                success {
+                    echo "✅ EC2 블루 배포 성공!"
+                }
+                failure {
+                    echo "❌ EC2 배포 실패. 콘솔 로그를 확인하세요."
+                }
+            }
             stage('Green 자동배포 시작') {
                 steps {
                     input message: '자동배포 시작', ok: "Yes"
@@ -96,13 +104,6 @@ EOF
         }
         
         
-        post {
-            success {
-                echo "✅ EC2 블루 배포 성공!"
-            }
-            failure {
-                echo "❌ EC2 배포 실패. 콘솔 로그를 확인하세요."
-            }
-        }
+       
     
 }
