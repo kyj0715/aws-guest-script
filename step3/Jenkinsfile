@@ -20,6 +20,7 @@ pipeline {
         EC2_USER='ubuntu'
         EC2_HOST='15.164.228.132'
         EC2_APP_DIR='/home/ubuntu/aws-guest-script'
+        STEP_NUM='step3'
         DOCKER_COMPOSE_FILE='./deploy/docker-compose-guest-mysql-image.yml'
         //DOCKER_COMPOSE_FILE='docker-compose-guest-mysql.yml'
         // Jenkins → Credentials → SSH Username with private key
@@ -42,8 +43,6 @@ pipeline {
                         mkdir -p "${EC2_APP_DIR}"
                         cd "${EC2_APP_DIR}"
 
-
-
                         echo "[EC2] Git clone: ${GITHUB_SCRIPT_URL}"
                         #git clone ${GITHUB_SCRIPT_URL} .
 
@@ -53,8 +52,8 @@ pipeline {
                         git remote add origin ${GITHUB_SCRIPT_URL}
                         # sparse checkout 활성화
                         git config core.sparseCheckout true
-                        # 체크아웃할 경로 지정 (예: step3/ 디렉토리만)
-                        echo "step3/" >> .git/info/sparse-checkout
+                        # 체크아웃할 경로 지정 (예: ${STEP_NUM}/build 디렉토리만)
+                        echo " ${STEP_NUM}/build/" >> .git/info/sparse-checkout
                         # 특정 브랜치를 sparse-checkout
                         git pull origin main
 
