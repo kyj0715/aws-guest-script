@@ -4,8 +4,8 @@ services:
     image: academyitwill/guest:v2 # 도커 허브에서 앱 이미지 사용
     environment:
       SPRING_PROFILES_ACTIVE: mysql-prod-group   # ★ 프로필 분리됨
-    depends_on:
-      - mysqlservice.default
+    #depends_on:
+    #  - mysqlservice.default
     ports:
       - 80:8080
     networks:
