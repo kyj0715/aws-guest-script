@@ -105,13 +105,13 @@ pipeline {
                         ls -al
 
                         echo "[EC2] docker-compose pull (이미지 갱신)"
-                        docker compose -f ${DOCKER_COMPOSE_FILE} pull || true
+                        docker compose -f ./${STEP_NUM}/deploy/${DOCKER_COMPOSE_FILE} pull || true
                         
                         echo "[EC2] 기존 컨테이너 down"
-                        docker compose -f ${DOCKER_COMPOSE_FILE} down || true
+                        docker compose -f ./${STEP_NUM}/deploy/${DOCKER_COMPOSE_FILE} down || true
 
                         echo "[EC2] 기존 이미지 삭제 (compose에서 사용하는 이미지만)"
-                        IMAGES=\$(docker compose -f ${DOCKER_COMPOSE_FILE} images -q || true)
+                        IMAGES=\$(docker compose -f ./${STEP_NUM}/deploy/${DOCKER_COMPOSE_FILE} images -q || true)
                         if [ -n "\$IMAGES" ]; then
                             echo "[EC2] 삭제할 이미지: \$IMAGES"
                             docker rmi \$IMAGES || true
@@ -123,10 +123,10 @@ pipeline {
                         docker image prune -f || true
 
                         echo "[EC2] 새로운 컨테이너 up -d"
-                        docker compose -f ${DOCKER_COMPOSE_FILE} up -d
+                        docker compose -f ./${STEP_NUM}/deploy/${DOCKER_COMPOSE_FILE} up -d
 
                         echo "[EC2] 컨테이너 상태 확인"
-                        docker compose -f ${DOCKER_COMPOSE_FILE} ps
+                        docker compose -f ./${STEP_NUM}/deploy/${DOCKER_COMPOSE_FILE} ps
                     '
                 """
                 }
