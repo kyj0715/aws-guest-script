@@ -53,24 +53,26 @@ pipeline {
               
             }
         }
-         stage('Source Build[/guest-frontend]') {
-            steps {
-               checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        url: "${GITHUB_SOURCE_URL}",
-                        credentialsId: env.GITHUB_CREDENTIALS
-                    ]],
-                    extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [path: 'guest_frontend/']
-                        ]]
-                    ]
-                ])
+        
+        // stage('Source Build[/guest-frontend]') {
+        //     steps {
+        //        checkout([
+        //             $class: 'GitSCM',
+        //             branches: [[name: '*/main']],
+        //             userRemoteConfigs: [[
+        //                 url: "${GITHUB_SOURCE_URL}",
+        //                 credentialsId: env.GITHUB_CREDENTIALS
+        //             ]],
+        //             extensions: [
+        //                 [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+        //                     [path: 'guest_frontend/']
+        //                 ]]
+        //             ]
+        //         ])
             
-            }
-        }
+        //     }
+        // }
+        
         /***********************
          * 2.  Docker 이미지 빌드 & DockerHub 푸시
          ***********************/
@@ -94,11 +96,11 @@ pipeline {
                 sh '''
                                      
                     docker build  -t "${DOCKERHUB_USER}/guest-backend" ./${STEP_NUM}/build/docker/backend
-                    docker build  -t "${DOCKERHUB_USER}/guest-frontend" ./${STEP_NUM}/build/docker/frontend
+                    #docker build  -t "${DOCKERHUB_USER}/guest-frontend" ./${STEP_NUM}/build/docker/frontend
 
                     echo "${DOCKERHUB_PASS}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
                     docker push "${DOCKERHUB_USER}/guest-backend"
-                    docker push "${DOCKERHUB_USER}/guest-frontend"
+                    #docker push "${DOCKERHUB_USER}/guest-frontend"
                     docker logout
                 '''
                 }
