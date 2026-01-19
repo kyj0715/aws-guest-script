@@ -38,10 +38,11 @@ pipeline {
         stage('Source Build') {
             steps {
                 git branch: 'main',
-                url: "${GITHUB_SOURCE_URL}"
-                credentialsId: env.GITHUB_CREDENTIALS   // ✅ GitHub 크리덴셜 ID
+                    url: "${GITHUB_SOURCE_URL}",
+                    credentialsId: env.GITHUB_CREDENTIALS
             }
         }
+
         
         // stage('Source Build[/guest-frontend]') {
         //     steps {
