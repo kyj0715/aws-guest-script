@@ -75,6 +75,7 @@ pipeline {
                     ]]
                 ]
             ])
+           }
             echo "==== Source Checkout 완료 ===="
             steps {
                echo "==== Git Checkout 시작 ===="
